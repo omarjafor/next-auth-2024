@@ -4,8 +4,13 @@ import { initialLogFormData, logformControls } from '../utils';
 import { Label } from '@/components/ui/label';
 import CommonElement from '@/components/form-element';
 import { Button } from '@/components/ui/button';
+import { signInAction } from '@/actions';
+import { useRouter } from 'next/navigation';
+import { useToast } from '@/components/ui/use-toast';
 
 const SignIn = () => {
+    const { toast } = useToast();
+    const router = useRouter();
     const [signInFormData, setSignInFormData] = useState(initialLogFormData);
 
     function handleButtonValid() {
@@ -13,7 +18,11 @@ const SignIn = () => {
     }
 
     async function handleSignIn() {
-        
+        const result = await signInAction(signInFormData);
+        if (result?.success) {
+            toast({ title: result?.message });
+            router.push('/');
+        }
     }
 
     return (
