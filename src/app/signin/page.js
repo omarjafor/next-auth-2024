@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { signInAction } from '@/actions';
 import { useRouter } from 'next/navigation';
 import { useToast } from '@/components/ui/use-toast';
+import Link from 'next/link';
 
 const SignIn = () => {
     const { toast } = useToast();
@@ -41,6 +42,7 @@ const SignIn = () => {
                     )
                 }
                 <Button className='disabled:opacity-65 my-2' disabled={!handleButtonValid()} type='submit'>Login</Button>
+                <Link href={'/signup'} className="bg-purple-500 py-1 px-2 ml-3 text-white rounded">Sign Up</Link>
             </form>
         </div>
     );

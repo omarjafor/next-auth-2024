@@ -64,7 +64,7 @@ export async function signInAction(formData) {
             userName: checkUser.userName,
             email: checkUser.email
         }
-        const token = jwt.sign(createTokenData, process.env.SECRET_KEY, { expiresIn: 3600 });
+        const token = jwt.sign(createTokenData, process.env.SECRET_KEY, { expiresIn: 36000 });
 
         const getCookies = cookies();
         getCookies.set('token', token);
@@ -95,12 +95,12 @@ export async function authUserAction() {
         }
         const decode = jwt.verify(token, process.env.SECRET_KEY);
         const getUser = await User.findOne({ _id: decode.id });
-        if(getUser){
+        if (getUser) {
             return {
                 success: true,
                 data: JSON.parse(JSON.stringify(getUser))
             }
-        } else{
+        } else {
             return {
                 success: false,
                 message: 'Some error occured! Please try again'
@@ -113,4 +113,9 @@ export async function authUserAction() {
             message: 'Something went wrong!'
         }
     }
+}
+
+export async function logOutAction() {
+    const getCookies = cookies();
+    getCookies.set('token', '');
 }
